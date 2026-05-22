@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zainab Study Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#f472b6;--pink-mid:#ec4899;--pink-lt:#fce7f3;
+  --pink-dim:#fbcfe8;--offwhite:#fdf2f8;
+  --text:#1a0a14;--muted:#9d6b8a;--border:rgba(244,114,182,0.2);
+  --shadow:0 4px 30px rgba(244,114,182,0.10);
+}
+body{min-height:100vh;background:var(--offwhite);font-family:'Jost',sans-serif;color:var(--text);}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background-image:radial-gradient(circle,rgba(244,114,182,0.18) 1px,transparent 1px);
+  background-size:28px 28px;pointer-events:none;}
+body::after{content:'';position:fixed;top:0;left:0;right:0;height:4px;z-index:100;
+  background:linear-gradient(90deg,#f9a8d4,#ec4899,#f472b6,#fbcfe8,#ec4899);
+  background-size:300% 100%;animation:shineBar 4s linear infinite;}
+@keyframes shineBar{to{background-position:300% 0}}
+.wrap{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:52px 16px 80px;}
+header{text-align:center;margin-bottom:44px;animation:fadeUp 0.8s ease both;}
+.header-icon{display:inline-flex;align-items:center;justify-content:center;
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,#fce7f3,#fbcfe8);
+  border:2px solid var(--pink-dim);font-size:2rem;margin-bottom:18px;
+  box-shadow:0 8px 24px rgba(244,114,182,0.2);}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,7vw,3rem);font-weight:700;color:var(--text);line-height:1.1;}
+header h1 em{font-style:italic;color:var(--pink-mid);}
+.tagline{margin-top:8px;font-size:0.73rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.stat-box{background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 10px;text-align:center;box-shadow:var(--shadow);}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--pink-mid);line-height:1;}
+.stat-lbl{font-size:0.67rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow);}
+.card-label{font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--pink-mid);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+.sched-row{display:flex;align-items:center;gap:12px;padding:11px 14px;
+  background:var(--offwhite);border:1px solid var(--pink-lt);border-radius:12px;margin-bottom:8px;}
+.sched-blob{width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(135deg,#fce7f3,#fbcfe8);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.sched-time{font-weight:600;font-size:0.88rem;color:var(--text);}
+.sched-desc{font-size:0.74rem;color:var(--muted);margin-top:1px;}
+.quote-box{margin-top:16px;padding:16px 18px;
+  background:linear-gradient(135deg,#fdf2f8,#fce7f3);
+  border-radius:14px;border:1px solid var(--pink-dim);position:relative;overflow:hidden;}
+.quote-box::before{content:'\201C';position:absolute;top:-10px;left:10px;
+  font-family:'Playfair Display',serif;font-size:5rem;color:rgba(244,114,182,0.12);line-height:1;}
+.quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:0.95rem;line-height:1.7;color:#4a1942;}
+.quote-sig{margin-top:8px;font-size:0.73rem;color:var(--pink-mid);font-weight:600;}
+/* progress */
+.progress-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px;}
+.progress-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--pink-mid);line-height:1;}
+.progress-num sup{font-size:0.95rem;color:var(--muted);}
+.bar-track{height:10px;background:var(--pink-lt);border-radius:99px;overflow:hidden;margin-bottom:10px;}
+.bar-fill{height:100%;background:linear-gradient(90deg,#f9a8d4,#ec4899);border-radius:99px;transition:width 0.7s cubic-bezier(.4,0,.2,1);}
+.badges{display:flex;gap:8px;flex-wrap:wrap;}
+.badge{padding:3px 11px;border-radius:99px;font-size:0.72rem;font-weight:500;}
+.badge-done{background:#fce7f3;color:#be185d;border:1px solid #fbcfe8;}
+.badge-left{background:#fff;color:var(--muted);border:1px solid var(--border);}
+
+/* ── SUBJECT SECTION HEADER ── */
+.subj-header{display:flex;align-items:center;gap:10px;padding:22px 0 10px;
+  font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:var(--muted);}
+.subj-header-line{flex:1;height:1px;background:var(--border);}
+.subj-icon{font-size:1.1rem;}
+
+/* ── TASK ROW ── */
+.task-item{display:flex;align-items:center;border-radius:14px;border:1.5px solid;overflow:hidden;
+  transition:transform 0.15s,box-shadow 0.15s;margin-bottom:8px;cursor:pointer;}
+.task-item:active{transform:scale(0.99);}
+.task-item.todo    {background:#fff;border-color:rgba(244,114,182,0.2);}
+.task-item.study   {background:#fff;border-color:rgba(244,114,182,0.2);}
+.task-item.done    {background:#f0fdf4;border-color:rgba(134,197,150,0.5);}
+.task-item.crunch  {background:#fff7ed;border-color:rgba(249,115,22,0.3);}
+.task-item.crunch.done{background:#f0fdf4;border-color:rgba(134,197,150,0.5);}
+.task-item.review  {background:#fefce8;border-color:rgba(234,179,8,0.35);}
+.task-item.review.done{background:#f0fdf4;border-color:rgba(134,197,150,0.5);}
+.task-item.revision{background:#fdf4ff;border-color:rgba(192,132,252,0.35);}
+.task-item.revision.done{background:#f0fdf4;border-color:rgba(134,197,150,0.5);}
+.task-item.exam    {background:#fff1f2;border-color:rgba(244,63,94,0.35);}
+.task-item.exam.done{background:#f0fdf4;border-color:rgba(134,197,150,0.5);}
+/* today glow */
+.task-item.is-today{box-shadow:0 0 0 2.5px var(--pink-mid),0 6px 24px rgba(244,114,182,0.2)!important;}
+
+.task-accent{width:4px;align-self:stretch;flex-shrink:0;}
+.task-item.study   .task-accent,.task-item.todo .task-accent{background:linear-gradient(180deg,#f9a8d4,#ec4899);}
+.task-item.done    .task-accent{background:linear-gradient(180deg,#86efac,#4ade80);}
+.task-item.crunch  .task-accent{background:linear-gradient(180deg,#fdba74,#f97316);}
+.task-item.crunch.done .task-accent{background:linear-gradient(180deg,#86efac,#4ade80);}
+.task-item.review  .task-accent{background:linear-gradient(180deg,#fde047,#eab308);}
+.task-item.review.done .task-accent{background:linear-gradient(180deg,#86efac,#4ade80);}
+.task-item.revision .task-accent{background:linear-gradient(180deg,#d8b4fe,#a855f7);}
+.task-item.revision.done .task-accent{background:linear-gradient(180deg,#86efac,#4ade80);}
+.task-item.exam    .task-accent{background:linear-gradient(180deg,#fda4af,#e11d48);}
+.task-item.exam.done .task-accent{background:linear-gradient(180deg,#86efac,#4ade80);}
+
+.task-inner{flex:1;display:flex;align-items:center;gap:10px;padding:11px 12px;}
+.task-date-col{display:flex;flex-direction:column;min-width:52px;flex-shrink:0;}
+.task-date{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--pink-mid);line-height:1;}
+.task-day{font-size:0.62rem;font-weight:500;letter-spacing:0.06em;color:var(--muted);margin-top:2px;text-transform:uppercase;}
+.task-pills{flex:1;display:flex;flex-direction:column;gap:4px;}
+.pills-row{display:flex;flex-wrap:wrap;gap:5px;}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;
+  border-radius:99px;font-size:0.75rem;font-weight:500;border:1px solid;white-space:nowrap;}
+.pill-organic {background:#fef9ec;border-color:#f6d860;color:#7a5c00;}
+.pill-dosage  {background:#fff0f6;border-color:#f9a8d4;color:#9d174d;}
+.pill-bio     {background:#f0fdf4;border-color:#6ee7b7;color:#065f46;}
+.pill-micro   {background:#eff6ff;border-color:#93c5fd;color:#1e40af;}
+.pill-pharma  {background:#fdf4ff;border-color:#c084fc;color:#6b21a8;}
+.pill-green   {background:#f0fdf4;border-color:#86efac;color:#166534;}
+
+.type-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 9px;
+  border-radius:99px;font-size:0.63rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;}
+.type-badge.crunch{background:#fff7ed;border:1px solid #fed7aa;color:#c2410c;}
+.type-badge.revision{background:#fdf4ff;border:1px solid #d8b4fe;color:#7e22ce;}
+.type-badge.review{background:#fefce8;border:1px solid #fde68a;color:#92400e;}
+.type-badge.exam{background:#fff1f2;border:1px solid #fecdd3;color:#be123c;}
+.type-badge.today{background:var(--pink-lt);border:1px solid var(--pink-dim);color:var(--pink-mid);}
+
+.check-btn{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:2px solid;
+  background:transparent;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:0.9rem;transition:all 0.2s;margin-right:10px;outline:none;}
+.check-btn:hover{transform:scale(1.15);}
+.task-item.study    .check-btn,.task-item.todo .check-btn{border-color:var(--pink-dim);color:var(--pink);}
+.task-item.done     .check-btn{background:#dcfce7;border-color:#86efac;color:#16a34a;}
+.task-item.crunch   .check-btn{border-color:#fdba74;color:#f97316;}
+.task-item.crunch.done .check-btn{background:#dcfce7;border-color:#86efac;color:#16a34a;}
+.task-item.review   .check-btn{border-color:#fde047;color:#ca8a04;}
+.task-item.review.done .check-btn{background:#dcfce7;border-color:#86efac;color:#16a34a;}
+.task-item.revision .check-btn{border-color:#d8b4fe;color:#9333ea;}
+.task-item.revision.done .check-btn{background:#dcfce7;border-color:#86efac;color:#16a34a;}
+.task-item.exam     .check-btn{border-color:#fda4af;color:#e11d48;}
+.task-item.exam.done .check-btn{background:#dcfce7;border-color:#86efac;color:#16a34a;}
+
+/* motivational bubble */
+.motiv-bubble{display:none;padding:11px 15px;
+  background:linear-gradient(135deg,#fdf2f8,#fce7f3);
+  border:1px solid var(--pink-dim);border-top:none;
+  border-radius:0 0 13px 13px;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:0.85rem;line-height:1.65;color:#7c2d5e;}
+.motiv-bubble.visible{display:block;animation:fadeUp 0.3s ease both;}
+.motiv-sig{display:block;margin-top:6px;font-size:0.72rem;color:var(--pink-mid);font-style:normal;font-weight:600;}
+
+/* today pulse dot */
+.today-dot{display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--pink-mid);animation:pulse 1.4s ease-in-out infinite;vertical-align:middle;margin-right:3px;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.5);}}
+
+.reset-wrap{text-align:center;margin-top:16px;}
+.reset-btn{border:1.5px solid var(--border);background:transparent;color:var(--muted);
+  font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;padding:10px 28px;
+  border-radius:99px;cursor:pointer;transition:all 0.2s;}
+.reset-btn:hover{background:var(--pink-lt);border-color:#f9a8d4;color:var(--pink-mid);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-icon">🌸</div>
+    <h1>Zainab's<br><em>Study Plan</em></h1>
+    <p class="tagline">Delta University · Pharmacy · 23 May → 17 June 2026</p>
+  </header>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num">53</div><div class="stat-lbl">Lectures</div></div>
+    <div class="stat-box"><div class="stat-num">5</div><div class="stat-lbl">Exams</div></div>
+    <div class="stat-box"><div class="stat-num" id="pct-stat">0%</div><div class="stat-lbl">Progress</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">📊 Progress</div>
+    <div class="progress-top">
+      <div class="progress-num" id="pct">0<sup>%</sup></div>
+      <div style="font-size:0.78rem;color:var(--muted)" id="days-label"></div>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+    <div class="badges">
+      <span class="badge badge-done" id="badge-done">0 Completed</span>
+      <span class="badge badge-left" id="badge-left">0 Remaining</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">⏰ Daily Schedule</div>
+    <div class="sched-row">
+      <div class="sched-blob">☀️</div>
+      <div><div class="sched-time">10:00 AM – 1:00 PM</div><div class="sched-desc">Morning · Lectures 1 &amp; 2</div></div>
+    </div>
+    <div class="sched-row">
+      <div class="sched-blob">🌤️</div>
+      <div><div class="sched-time">4:00 PM – 7:00 PM</div><div class="sched-desc">Afternoon · Lectures 3 &amp; 4</div></div>
+    </div>
+    <div class="sched-row">
+      <div class="sched-blob">🌙</div>
+      <div><div class="sched-time">11:00 PM</div><div class="sched-desc">Daily Revision · Wind Down</div></div>
+    </div>
+    <div class="quote-box">
+      <p class="quote-text">Zeinab, I know how capable you are, and no matter how hard things get, I will always believe in you and stand by your side.</p>
+      <p class="quote-sig">— Sherif 💕</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">📅 Full Plan</div>
+    <div id="tasks"></div>
+    <div class="reset-wrap">
+      <button class="reset-btn" onclick="resetData()">↺ &nbsp;Reset All Progress</button>
+    </div>
+  </div>
+
+</div>
+<script>
+var subjects = [
+  {
+    name:'Organic', icon:'⚗️', cls:'pill-organic',
+    days:[
+      {date:'23/5',day:'Sat',type:'study',
+       lecs:['Organic 1','Organic 2'],
+       motiv:'Day one and you showed up. That is the hardest part. Sherif is so proud of you right now.'},
+      {date:'24/5',day:'Sun',type:'study',
+       lecs:['Organic 3','Organic 4'],
+       motiv:'Two days in a row. You are building something real. Keep this energy habibty.'},
+      {date:'25/5',day:'Mon',type:'study',
+       lecs:['Organic 5','Organic 6'],
+       motiv:'Halfway through Organic. You are ahead of the game already.'},
+      {date:'26/5',day:'Tue',type:'study',
+       lecs:['Organic 7','Organic 8'],
+       motiv:'Organic is almost done. You are carrying so much and making it look effortless.'},
+      {date:'27/5',day:'Wed',type:'study',
+       lecs:['Organic 9','Organic 10'],
+       motiv:'Organic complete ✅ Done before June even starts. You are extraordinary.'},
+      {date:'30/5',day:'Sat',type:'revision',
+       lecs:['Organic — Revision'],
+       motiv:'Organic revision day. Everything is already in your head — today you just bring it to the surface.'},
+      {date:'31/5',day:'Sun',type:'review',
+       lecs:['Organic — Review Session'],
+       motiv:'Walk in tomorrow and own every single question. Sherif will be thinking of you the whole time.'},
+      {date:'1/6',day:'Mon',type:'exam',
+       lecs:['EXAM — Organic Chemistry'],
+       motiv:'This is your moment. Everything you studied is right there inside you. Go show them, Zeinab. 💪'},
+    ]
+  },
+  {
+    name:'Dosage', icon:'🧪', cls:'pill-dosage',
+    days:[
+      {date:'23/5',day:'Sat',type:'study',
+       lecs:['Dosage 1','Dosage 2'],
+       motiv:'Dosage starts on day one. Two subjects at once — you are already ahead of everyone.'},
+      {date:'24/5',day:'Sun',type:'study',
+       lecs:['Dosage 3','Dosage 4'],
+       motiv:'Dosage is building nicely. Sherif believes in you.'},
+      {date:'25/5',day:'Mon',type:'study',
+       lecs:['Dosage 5','Dosage 6'],
+       motiv:'Halfway through Dosage. You are unstoppable habibty.'},
+      {date:'26/5',day:'Tue',type:'study',
+       lecs:['Dosage 7'],
+       motiv:'Almost done with Dosage. One more push tomorrow.'},
+      {date:'27/5',day:'Wed',type:'study',
+       lecs:['Dosage 8','Dosage 9'],
+       motiv:'Dosage complete ✅ Two subjects done and June has not even started yet.'},
+      {date:'2/6',day:'Tue',type:'review',
+       lecs:['Dosage — Review Session'],
+       motiv:'One exam down! Dosage gets your full attention today. You finished it days ago — today is just reminding yourself.'},
+      {date:'3/6',day:'Wed',type:'exam',
+       lecs:['EXAM — Dosage Forms'],
+       motiv:'Two exams in a row and you are handling it like a pro. Sherif believes in you completely.'},
+    ]
+  },
+  {
+    name:'Bio', icon:'🧬', cls:'pill-bio',
+    days:[
+      {date:'28/5',day:'Thu',type:'study',
+       lecs:['Bio 1','Bio 2'],
+       motiv:'Bio begins! Sherif is watching you build momentum day after day.'},
+      {date:'29/5',day:'Fri',type:'crunch',
+       lecs:['Bio 3','Bio 4','Bio 5','Bio 6'],
+       motiv:'Bio crunch day — four in one push. You are stronger than you think.'},
+      {date:'4/6',day:'Thu',type:'crunch',
+       lecs:['Bio 7','Bio 8','Bio 9','Bio 10'],
+       motiv:'Bio crunch finale — finish it today! Bio complete ✅ You are racing through this season.'},
+      {date:'5/6',day:'Fri',type:'revision',
+       lecs:['Bio — Revision'],
+       motiv:'Bio revision day. A whole subject sitting in your memory waiting to shine. Go get it habibty.'},
+      {date:'6/6',day:'Sat',type:'review',
+       lecs:['Bio — Review Session'],
+       motiv:'Bio review. Everything is yours. Tomorrow you walk in and show them.'},
+      {date:'7/6',day:'Sun',type:'exam',
+       lecs:['EXAM — Bio Chemistry'],
+       motiv:'Third exam. You have done this twice already and you are only getting stronger. Go be brilliant.'},
+    ]
+  },
+  {
+    name:'Micro', icon:'🔬', cls:'pill-micro',
+    days:[
+      {date:'8/6',day:'Mon',type:'study',
+       lecs:['Micro 4','Micro 5','Micro 6','Micro 7'],
+       motiv:'Three exams done — three wins. Micro is waiting and you have been building to this moment.'},
+      {date:'9/6',day:'Tue',type:'crunch',
+       lecs:['Micro 8','Micro 9','Micro 10','Micro 11'],
+       motiv:'Micro crunch — four in one go. You are in the final stretch. Sherif is cheering for you with everything.'},
+      {date:'10/6',day:'Wed',type:'revision',
+       lecs:['Micro 12','Micro — Revision'],
+       motiv:'Last Micro lecture then revision. Micro complete ✅ Every single one of those 12 lectures is yours now.'},
+      {date:'11/6',day:'Thu',type:'review',
+       lecs:['Micro — Review Session'],
+       motiv:'Micro review. Tomorrow is yours. Walk in knowing Sherif is right there with you in spirit.'},
+      {date:'12/6',day:'Fri',type:'exam',
+       lecs:['EXAM — Microbiology'],
+       motiv:'Four down, one to go. You are almost at the finish line and you have earned every step of it.'},
+    ]
+  },
+  {
+    name:'Pharma', icon:'💊', cls:'pill-pharma',
+    days:[
+      {date:'13/6',day:'Sat',type:'study',
+       lecs:['Pharma 1','Pharma 2','Pharma 3','Pharma 4'],
+       motiv:'Last subject. Last mountain. You are already at the top in your heart — now just prove it on paper.'},
+      {date:'14/6',day:'Sun',type:'study',
+       lecs:['Pharma 5','Pharma 6','Pharma 7','Pharma 8'],
+       motiv:'Halfway through Pharma. Look how far you have come since May 23rd. You are extraordinary, Zeinab.'},
+      {date:'15/6',day:'Mon',type:'revision',
+       lecs:['Pharma 9','Pharma 10','Pharma 11','Pharma 12'],
+       motiv:'Pharma complete ✅ All 53 lectures. Every subject. Every day. You did it all. Sherif is so proud.'},
+      {date:'16/6',day:'Tue',type:'review',
+       lecs:['Pharma — Review Session'],
+       motiv:'Final review. Final exam tomorrow. You have given everything and it shows. Go finish what you started.'},
+      {date:'17/6',day:'Wed',type:'exam',
+       lecs:['EXAM — Pharmacology'],
+       motiv:'This is the last one. You started on May 23rd and you never stopped. That is who you are, Zeinab. Go finish it. Sherif loves you. 💕'},
+    ]
+  },
+];
+
+var allDays = [];
+subjects.forEach(function(s){ s.days.forEach(function(d){ allDays.push(d); }); });
+var total = allDays.length;
+
+var KEY = 'zainab_v2';
+var done = [];
+try{ done = JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ done=[]; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(done)); }catch(e){} }
+function resetData(){ if(confirm('Reset all progress?')){ done=[]; save(); render(); } }
+
+function playSound(){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [[523,0],[659,0.11],[784,0.22],[1047,0.35]].forEach(function(ft){
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.type='sine';o.frequency.value=ft[0];
+      g.gain.setValueAtTime(0.07,ctx.currentTime+ft[1]);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+ft[1]+0.35);
+      o.connect(g);g.connect(ctx.destination);
+      o.start(ctx.currentTime+ft[1]);o.stop(ctx.currentTime+ft[1]+0.4);
+    });
+  }catch(e){}
+}
+
+function toggle(idx){
+  var pos = done.indexOf(idx);
+  if(pos===-1){ done.push(idx); playSound(); }
+  else done.splice(pos,1);
+  save(); render();
+}
+
+function pillClass(text, subjCls, isDone){
+  if(isDone) return 'pill-green';
+  return subjCls;
+}
+
+function render(){
+  var doneCount = done.length;
+  var pct = total>0 ? Math.round(doneCount/total*100) : 0;
+  document.getElementById('pct').innerHTML = pct+'<sup>%</sup>';
+  document.getElementById('pct-stat').textContent = pct+'%';
+  document.getElementById('bar').style.width = pct+'%';
+  document.getElementById('badge-done').textContent = doneCount+' Completed';
+  document.getElementById('badge-left').textContent = (total-doneCount)+' Remaining';
+  document.getElementById('days-label').textContent = doneCount+' / '+total+' days';
+
+  var now = new Date();
+  var todayStr = now.getDate()+'/'+(now.getMonth()+1);
+
+  var html = '';
+  var globalIdx = 0;
+
+  subjects.forEach(function(subj){
+    html += '<div class="subj-header">';
+    html += '<div class="subj-header-line"></div>';
+    html += '<span class="subj-icon">'+subj.icon+'</span>';
+    html += '<span>'+subj.name.toUpperCase()+'</span>';
+    html += '<div class="subj-header-line"></div>';
+    html += '</div>';
+
+    subj.days.forEach(function(row){
+      var idx = globalIdx++;
+      var isDone = done.indexOf(idx) !== -1;
+      var isToday = row.date === todayStr;
+
+      var cls = row.type + (isDone ? ' done' : '') + (isToday ? ' is-today' : '');
+
+      var icon = isDone ? '✓' :
+        row.type==='exam'     ? '🎯' :
+        row.type==='revision' ? '🔁' :
+        row.type==='review'   ? '📖' :
+        row.type==='crunch'   ? '🔥' : '○';
+
+      var badges = '';
+      if(isToday){
+        var todayLabel = row.type==='exam' ? '🎓 Exam Day!' :
+          row.type==='revision' ? '🔁 Revision Day' :
+          row.type==='review'   ? '📖 Review Day' :
+          row.type==='crunch'   ? '🔥 Crunch Day!' : '📅 Today';
+        badges += '<span class="today-dot"></span><span class="type-badge today">'+todayLabel+'</span> ';
+      }
+      if(!isToday){
+        if(row.type==='crunch')   badges += '<span class="type-badge crunch">🔥 Crunch</span> ';
+        if(row.type==='revision') badges += '<span class="type-badge revision">🔁 Revision</span> ';
+        if(row.type==='review')   badges += '<span class="type-badge review">📖 Review</span> ';
+        if(row.type==='exam')     badges += '<span class="type-badge exam">🎯 EXAM</span> ';
+      }
+
+      var pillsHtml = row.lecs.map(function(lec){
+        return '<span class="pill '+pillClass(lec, subj.cls, isDone)+'">'+subj.icon+' '+lec+'</span>';
+      }).join('');
+
+      html += '<div class="task-item '+cls+'" onclick="toggle('+idx+')">';
+      html += '<div class="task-accent"></div>';
+      html += '<div class="task-inner">';
+      html += '<div class="task-date-col"><div class="task-date">'+row.date+'</div><div class="task-day">'+row.day+'</div></div>';
+      html += '<div class="task-pills">';
+      if(badges) html += '<div style="margin-bottom:4px;">'+badges+'</div>';
+      html += '<div class="pills-row">'+pillsHtml+'</div>';
+      html += '</div>';
+      html += '</div>';
+      html += '<button class="check-btn" onclick="event.stopPropagation();toggle('+idx+')">'+icon+'</button>';
+      html += '</div>';
+
+      if(row.motiv && (isDone || isToday)){
+        html += '<div class="motiv-bubble visible">'+row.motiv+'<span class="motiv-sig">— Sherif 💕</span></div>';
+      }
+    });
+  });
+
+  document.getElementById('tasks').innerHTML = html;
+
+  setTimeout(function(){
+    var el = document.querySelector('.is-today');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 300);
+}
+
+render();
+</script>
+</body>
+</html>
